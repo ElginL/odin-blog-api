@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const { DateTime } = require('luxon');
+const Post = require('./post');
 
 const CommentSchema = new Schema({
     username: {
@@ -14,6 +15,10 @@ const CommentSchema = new Schema({
         required: true,
         minlength: 6,
         maxlength: 60
+    },
+    post: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Post
     }
 }, {
     timestamps: { createdAt: true, updatedAt: true }
