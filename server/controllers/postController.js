@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const { body, validationResult } = require('express-validator');
 
 const getAllPosts = (req, res, next) => {
     Post.find()
@@ -12,21 +13,42 @@ const getAllPosts = (req, res, next) => {
         });
 };
 
-const createPost = (req, res, next) => {
-    const newPost = new Post({
-        title: req.body.title,
-        content: req.body.content,
-        isPublished: req.body.isPublished
-    });
-
-    newPost.save(err => {
-        if (err) {
-            return next(err);
+const createPost = [
+    body('title')
+        .trim()
+        .escape()
+        .isLength({ min: 6, max: 50 })
+        .withMessage("Title must be between 6 and 50 characters"),
+    body('content')
+        .trim()
+        .escape()
+        .isLength({ min: 6 })
+        .withMessage("Content must be at least 6 characters long"),
+    body('isPublished')
+        .isBoolean(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            res.status(400).json({ errors });
+            return;
         }
 
-        res.sendStatus(201);
-    })
-}
+        const newPost = new Post({
+            title: req.body.title,
+            content: req.body.content,
+            isPublished: req.body.isPublished
+        });
+    
+        newPost.save(err => {
+            if (err) {
+                return next(err);
+            }
+    
+            res.sendStatus(201);
+        })
+    }
+]
 
 const getOnePost = (req, res, next) => {
     const postId = req.params.id;
@@ -46,29 +68,50 @@ const getOnePost = (req, res, next) => {
         });
 };
 
-const editOnePost = (req, res, next) => {
-    const postId = req.params.id;
-
-    Post.findByIdAndUpdate(postId, {
-        title: req.body.title,
-        content: req.body.content,
-        isPublished: req.body.isPublished
-    }, { 
-        new: true 
-    }, 
-    (err, updatedPost) => {
-        if (err) {
-            return next(err);
-        }
-
-        if (!updatedPost) {
-            res.status(400).json({ message: "Failed to update post. Check post id." });
+const editOnePost = [
+    body('title')
+        .trim()
+        .escape()
+        .isLength({ min: 6, max: 50 })
+        .withMessage("Title must be between 6 and 50 characters"),
+    body('content')
+        .trim()
+        .escape()
+        .isLength({ min: 6 })
+        .withMessage("Content must be at least 6 characters long"),
+    body('isPublished')
+        .isBoolean(),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        
+        if (!errors.isEmpty()) {
+            res.status(400).json({ errors });
             return;
         }
 
-        res.json(updatedPost);
-    });
-}
+        const postId = req.params.id;
+    
+        Post.findByIdAndUpdate(postId, {
+            title: req.body.title,
+            content: req.body.content,
+            isPublished: req.body.isPublished
+        }, { 
+            new: true 
+        }, 
+        (err, updatedPost) => {
+            if (err) {
+                return next(err);
+            }
+    
+            if (!updatedPost) {
+                res.status(400).json({ message: "Failed to update post. Check post id." });
+                return;
+            }
+    
+            res.json(updatedPost);
+        });
+    }
+]
 
 const deletePost = (req, res, next) => {
     const postId = req.params.id;
@@ -108,23 +151,42 @@ const getAllComments = (req, res, next) => {
         })
 }
 
-const createComment = (req, res, next) => {
-    const postId = req.params.id;
+const createComment = [
+    body('username')
+        .trim()
+        .escape()
+        .isLength({ min: 5, max: 20 })
+        .withMessage("Username must be between 5 and 20 characters"),
+    body('text')
+        .trim()
+        .escape()
+        .isLength({ min: 6, max: 60 })
+        .withMessage("Comment must be between 6 and 60 characters"),
+    (req, res, next) => {
+        const errors = validationResult(req);
 
-    const newComment = new Comment({
-        username: req.body.username,
-        text: req.body.text,
-        post: postId
-    });
-
-    newComment.save(err => {
-        if (err) {
-            return next(err);
+        if (!errors.isEmpty()) {
+            res.status(400).json({ errors });
+            return;
         }
 
-        res.sendStatus(201);
-    })
-};
+        const postId = req.params.id;
+    
+        const newComment = new Comment({
+            username: req.body.username,
+            text: req.body.text,
+            post: postId
+        });
+    
+        newComment.save(err => {
+            if (err) {
+                return next(err);
+            }
+    
+            res.sendStatus(201);
+        })
+    }
+]
 
 const deleteComment = (req, res, next) => {
     const commentId = req.params.id;
