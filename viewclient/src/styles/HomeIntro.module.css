@@ -1,0 +1,22 @@
+.container {
+    background-color: black;
+    width: 100%;
+    height: 70vh;
+    background: #ffffff url('../assets/office.jpg') no-repeat;
+    background-size: cover;
+}
+
+.text-container {
+    position: absolute;
+    color: white;
+    top: 15vh;
+    left: 90px;
+}
+
+.text-container > p {
+    font-size: 1.5rem;
+}
+
+.text-container > h1 {
+    font-size: 3rem;
+}
