@@ -1,19 +1,18 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
 
-const getAllPosts = (req, res) => {
+const getAllPosts = (req, res, next) => {
     Post.find()
         .exec((err, results) => {
             if (err) {
-                res.status(400).json({ msg: "Failed to get all posts" });
-                return;
+                return next(err);
             }
 
             res.json(results);
         });
 };
 
-const createPost = (req, res) => {
+const createPost = (req, res, next) => {
     const newPost = new Post({
         title: req.body.title,
         content: req.body.content,
@@ -22,33 +21,32 @@ const createPost = (req, res) => {
 
     newPost.save(err => {
         if (err) {
-            res.status(400).json({ msg: "Failed to create new post" })
-            return;
+            return next(err);
         }
 
         res.sendStatus(201);
     })
 }
 
-const getOnePost = (req, res) => {
+const getOnePost = (req, res, next) => {
     const postId = req.params.id;
 
     Post.findById(postId)
         .exec((err, foundPost) => {
             if (err) {
-                res.status(400).json({ msg: "Failed to get post" });
+                return next(err);
+            }
+
+            if (!foundPost) {
+                res.status(400).json({ message: "Failed to find post. Check post id." });
                 return;
             }
 
-            if (foundPost) {
-                res.json(foundPost);
-            } else {
-                res.status(400).json({ msg: "Failed to find post. Check post id." });
-            }
+            res.json(foundPost);
         });
 };
 
-const editOnePost = (req, res) => {
+const editOnePost = (req, res, next) => {
     const postId = req.params.id;
 
     Post.findByIdAndUpdate(postId, {
@@ -60,55 +58,57 @@ const editOnePost = (req, res) => {
     }, 
     (err, updatedPost) => {
         if (err) {
-            res.status(400).json({ msg: "Failed to update post" });
+            return next(err);
+        }
+
+        if (!updatedPost) {
+            res.status(400).json({ message: "Failed to update post. Check post id." });
             return;
         }
 
-        if (updatedPost) {
-            res.json(updatedPost);
-        } else {
-            res.status(400).json({ msg: "Failed to update post. Check post id." });
-        }
+        res.json(updatedPost);
     });
 }
 
-const deletePost = (req, res) => {
+const deletePost = (req, res, next) => {
     const postId = req.params.id;
 
     Post.findByIdAndDelete(postId)
         .exec((err, deletedPost) => {
             if (err) {
-                res.status(400).json({ msg: "Failed to delete post" });
-                return;
+                return next(err);
             }
         
             Comment.deleteMany({ post: postId }, err => {
                 if (err) {
-                    res.status(400).json({ msg: "Failed to delete comments related to this post." });
+                    return next(err);
+                }
+
+                if (!deletedPost) {
+                    res.status(400).json({ message: "Failed to find post to delete. Check post id", err: err.message });
                     return;
                 }
 
                 res.json(deletedPost);
             });      
-    })
+        })
 
 }
 
-const getAllComments = (req, res) => {
+const getAllComments = (req, res, next) => {
     const postId = req.params.id;
 
     Comment.find({ post: postId })
         .exec((err, comments) => {
             if (err) {
-                res.status(400).json({ msg: "Failed to get all comments" });
-                return;
+                return next(err);
             }
 
             res.json(comments);
         })
 }
 
-const createComment = (req, res) => {
+const createComment = (req, res, next) => {
     const postId = req.params.id;
 
     const newComment = new Comment({
@@ -119,30 +119,29 @@ const createComment = (req, res) => {
 
     newComment.save(err => {
         if (err) {
-            res.status(400).json({ msg: "Failed to create new comment" });
-            return;
+            return next(err);
         }
 
         res.sendStatus(201);
     })
 };
 
-const deleteComment = (req, res) => {
+const deleteComment = (req, res, next) => {
     const commentId = req.params.id;
 
     Comment.findByIdAndDelete(commentId)
         .exec((err, deletedComment) => {
             if (err) {
-                res.status(400).json({ msg: "Failed to delete comment" });
+                return next(err);
+            }
+
+            if (!deletedComment) {
+                res.status(400).json("Cannot find comment to delete, check your id");
                 return;
             }
 
-            if (deletedComment) {
-                res.json(deletedComment);
-            } else {
-                res.status(400).json("Cannot find comment to delete, check your id");
-            }
-        })
+            res.json(deletedComment);
+        });
 }
 
 module.exports = {
