@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
-const jwt = require('jsonwebtoken');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
@@ -19,6 +19,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 // Routes

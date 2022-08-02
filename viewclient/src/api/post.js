@@ -4,7 +4,7 @@ const baseURL = "http://localhost:3000/api/posts";
 
 const fetchPosts = async () => {
     try {
-        const posts = await axios.get(baseURL);
+        const posts = await axios.get(`${baseURL}/published`);
         return posts.data;
     } catch (err) {
         console.log(err);

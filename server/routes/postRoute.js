@@ -4,7 +4,10 @@ const postController = require('../controllers/postController');
 const verifyToken = require('../middleware/jwtVerify');
 
 // Get all Posts
-router.get('/', postController.getAllPosts);
+router.get('/all', postController.getAllPosts);
+
+// Get all published posts
+router.get('/published', postController.getPublishedPosts);
 
 // Create post
 router.post('/', verifyToken, postController.createPost);

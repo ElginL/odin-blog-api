@@ -4,12 +4,39 @@ const { body, validationResult } = require('express-validator');
 
 const getAllPosts = (req, res, next) => {
     Post.find()
+        .select({ title: 1, content: 1, createdAt: 1 })
         .exec((err, results) => {
             if (err) {
                 return next(err);
             }
 
-            res.json(results);
+            const formattedResults = results.map(result => ({
+                _id: result._id,
+                title: result.title,
+                content: result.content,
+                createdDate: result.createdDate
+            }))
+
+            res.json(formattedResults);
+        });
+}
+
+const getPublishedPosts = (req, res, next) => {
+    Post.find({ isPublished: true })
+        .select({ title: 1, content: 1, createdAt: 1 })
+        .exec((err, results) => {
+            if (err) {
+                return next(err);
+            }
+
+            const formattedResults = results.map(result => ({
+                _id: result._id,
+                title: result.title,
+                content: result.content,
+                createdDate: result.createdDate
+            }))
+
+            res.json(formattedResults);
         });
 };
 
@@ -54,6 +81,7 @@ const getOnePost = (req, res, next) => {
     const postId = req.params.id;
 
     Post.findById(postId)
+        .select({ title: 1, content: 1, createdAt: 1, updatedAt: 1 })
         .exec((err, foundPost) => {
             if (err) {
                 return next(err);
@@ -64,7 +92,15 @@ const getOnePost = (req, res, next) => {
                 return;
             }
 
-            res.json(foundPost);
+            res.json({
+                _id: foundPost._id,
+                title: foundPost.title,
+                content: foundPost.content,
+                createdDate: foundPost.createdDate,
+                createdTime: foundPost.createdTime,
+                editedDate: foundPost.updatedDate,
+                editedTime: foundPost.updatedTime
+            });
         });
 };
 
@@ -208,6 +244,7 @@ const deleteComment = (req, res, next) => {
 
 module.exports = {
     getAllPosts,
+    getPublishedPosts,
     createPost,
     getOnePost,
     editOnePost,

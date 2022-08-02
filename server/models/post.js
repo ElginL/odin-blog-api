@@ -18,17 +18,33 @@ const PostSchema = new Schema({
         type: Boolean,
         required: true,
         default: false,
-
     }
 }, {
     timestamps: { createdAt: true, updatedAt: true }
 });
 
 PostSchema
-    .virtual('createdAtFormatted')
+    .virtual('createdDate')
     .get(function() {
-        return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED) + ", " +
-            DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.TIME_24_SIMPLE);
-    })
+        return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.DATE_MED);
+    });
+
+PostSchema
+    .virtual('createdTime')
+    .get(function() {
+        return DateTime.fromJSDate(this.createdAt).toLocaleString(DateTime.TIME_24_SIMPLE);
+    });
+
+PostSchema
+    .virtual('updatedDate')
+    .get(function() {
+        return DateTime.fromJSDate(this.updatedAt).toLocaleString(DateTime.DATE_MED);
+    });
+
+PostSchema
+    .virtual('updatedTime')
+    .get(function() {
+        return DateTime.fromJSDate(this.updatedAt).toLocaleString(DateTime.TIME_24_SIMPLE);
+    });
 
 module.exports = mongoose.model('Post', PostSchema);
