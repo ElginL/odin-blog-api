@@ -178,24 +178,30 @@ const getAllComments = (req, res, next) => {
     const postId = req.params.id;
 
     Comment.find({ post: postId })
+        .select({ text: 1, username: 1, createdAt: 1 })
         .exec((err, comments) => {
             if (err) {
                 return next(err);
             }
 
-            res.json(comments);
+            const formattedComments = comments.map(comment => ({
+                _id: comment._id,
+                username: comment.username,
+                text: comment.text,
+                createdAt: comment.createdAtFormatted
+            }));
+
+            res.json(formattedComments);
         })
 }
 
 const createComment = [
     body('username')
         .trim()
-        .escape()
         .isLength({ min: 5, max: 20 })
         .withMessage("Username must be between 5 and 20 characters"),
     body('text')
         .trim()
-        .escape()
         .isLength({ min: 6, max: 60 })
         .withMessage("Comment must be between 6 and 60 characters"),
     (req, res, next) => {

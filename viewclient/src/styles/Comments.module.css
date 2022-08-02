@@ -1,0 +1,21 @@
+.comments-container {
+    padding-bottom: 30px;
+    width: 60%;
+    margin-top: 50px;
+}
+
+.comments-container > h2 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.comments-container > p {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

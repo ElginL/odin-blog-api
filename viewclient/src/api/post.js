@@ -20,7 +20,29 @@ const fetchOnePost = async id => {
     }
 }
 
+const fetchComments = async id => {
+    try {
+        const comments = await axios.get(`${baseURL}/${id}/comments`);
+        return comments.data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const addComment = async (id, username, comment) => {
+    try {
+        const response = await axios.post(`${baseURL}/${id}/comments`, {
+            username,
+            text: comment
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     fetchPosts,
-    fetchOnePost
+    fetchOnePost,
+    fetchComments,
+    addComment
 };
