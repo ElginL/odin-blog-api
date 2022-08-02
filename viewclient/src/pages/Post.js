@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchOnePost } from '../api/post';
 import styles from '../styles/Post.module.css';
 import Comments from '../components/Comments';
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const Post = () => {
@@ -20,6 +21,7 @@ const Post = () => {
 
     return (
         <div className={styles["container"]}>
+            <Navbar />
             <div className={styles["content-card"]}>
                 <h2>{post.title}</h2>
                 <div className={styles["image"]}>
