@@ -23,7 +23,7 @@ const CommentForm = ({ postId }) => {
     }
 
     return (
-        <div>
+        <div className={styles["container"]}>
             <h2 className={styles['title']}>Add a comment</h2>
             <form onSubmit={submitHandler} className={styles["form-container"]}>
                 <input 
