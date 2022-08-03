@@ -4,21 +4,20 @@ const { body, validationResult } = require('express-validator');
 
 const getUnpublishedPosts = (req, res, next) => {
     Post.find({ isPublished: false })
-        .select({ title: 1, content: 1, createdAt: 1, updatedAt: 1 })
         .exec((err, results) => {
             if (err) {
                 return next(err);
             }
 
             const formattedResults = results.map(result => ({
-                _id: result._id,
-                title: result.title,
-                content: result.content,
+                ...result._doc,
                 createdDate: result.createdDate,
                 updatedDate: result.updatedDate,
                 createdTime: result.createdTime,
-                updatedTime: result.updatedTime
+                updatedTime: result.updatedTime,
             }))
+
+            console.log(formattedResults);
 
             res.json(formattedResults);
         });
@@ -26,20 +25,17 @@ const getUnpublishedPosts = (req, res, next) => {
 
 const getPublishedPosts = (req, res, next) => {
     Post.find({ isPublished: true })
-        .select({ title: 1, content: 1, createdAt: 1, updatedAt: 1 })
         .exec((err, results) => {
             if (err) {
                 return next(err);
             }
 
             const formattedResults = results.map(result => ({
-                _id: result._id,
-                title: result.title,
-                content: result.content,
+                ...result._doc,
                 createdDate: result.createdDate,
                 updatedDate: result.updatedDate,
                 createdTime: result.createdTime,
-                updatedTime: result.updatedTime
+                updatedTime: result.updatedTime,
             }))
 
             res.json(formattedResults);
@@ -85,7 +81,6 @@ const getOnePost = (req, res, next) => {
     const postId = req.params.id;
 
     Post.findById(postId)
-        .select({ title: 1, content: 1, createdAt: 1, updatedAt: 1, isPublished: 1 })
         .exec((err, foundPost) => {
             if (err) {
                 return next(err);
@@ -97,14 +92,11 @@ const getOnePost = (req, res, next) => {
             }
 
             res.json({
-                _id: foundPost._id,
-                title: foundPost.title,
-                content: foundPost.content,
+                ...foundPost._doc,
                 createdDate: foundPost.createdDate,
                 createdTime: foundPost.createdTime,
                 editedDate: foundPost.updatedDate,
                 editedTime: foundPost.updatedTime,
-                isPublished: foundPost.isPublished
             });
         });
 };
@@ -133,7 +125,8 @@ const editOnePost = [
         Post.findByIdAndUpdate(postId, {
             title: req.body.title,
             content: req.body.content,
-            isPublished: req.body.isPublished
+            isPublished: req.body.isPublished,
+            photo: req.file ? req.file.filename : req.body.imgName ? req.body.imgName: ""
         }, { 
             new: true 
         }, 

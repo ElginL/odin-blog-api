@@ -12,7 +12,7 @@ const fetchPosts = async isPublished => {
     try {
         const URL = isPublished
             ? `${baseURL}/published`
-            : `${baseURL}/unpublished`
+            : `${baseURL}/unpublished`;
 
         const response = await axios.get(URL);
         return response.data;
@@ -30,13 +30,18 @@ const fetchSinglePost = async id => {
     }
 }
 
-const editSinglePost = async (id, title, content, isPublished) => {
+const editSinglePost = async (id, title, content, isPublished, photo, imgName) => {
+    const formData = new FormData();
+    if (photo) {
+        formData.append('photo', photo);
+    }
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('isPublished', isPublished);
+    formData.append('imgName', imgName);
+
     try {
-        const response = await axios.put(`${baseURL}/${id}`, {
-            title,
-            content,
-            isPublished
-        }, getConfig());
+        await axios.put(`${baseURL}/${id}`, formData, getConfig());
     } catch(err) {
         console.log(err);
     }
@@ -45,5 +50,5 @@ const editSinglePost = async (id, title, content, isPublished) => {
 export {
     fetchPosts,
     fetchSinglePost,
-    editSinglePost
+    editSinglePost,
 }

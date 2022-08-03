@@ -18,6 +18,9 @@ const PostSchema = new Schema({
         type: Boolean,
         required: true,
         default: false,
+    },
+    photo: {
+        type: String
     }
 }, {
     timestamps: { createdAt: true, updatedAt: true }

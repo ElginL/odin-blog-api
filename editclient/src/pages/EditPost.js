@@ -8,16 +8,23 @@ import EditForm from '../components/EditForm';
 
 const EditPost = () => {
     const { postId } = useParams();
-    const [title, setTitle] = useState("")
-    const [content, setContent] = useState("");
-    const [isPublished, setIsPublished] = useState(false);
+    const [post, setPost] = useState({
+        title: '',
+        content: '',
+        isPublished: false,
+        imgName: ''
+    });
+    const [photo, setPhoto] = useState();
 
     useEffect(() => {
         const getSinglePost = async () => {
             const post = await fetchSinglePost(postId);
-            setTitle(post.title);
-            setContent(post.content);
-            setIsPublished(post.isPublished);
+            setPost({
+                title: post.title,
+                content: post.content,
+                isPublished: post.isPublished,
+                imgName: post.photo
+            });
         };
 
         getSinglePost();
@@ -29,16 +36,14 @@ const EditPost = () => {
             <div className={styles["container"]}>
                 <EditForm
                     postId={postId}
-                    title={title}
-                    setTitle={setTitle}
-                    content={content}
-                    setContent={setContent}
-                    isPublished={isPublished}
-                    setIsPublished={setIsPublished}
+                    post={post}
+                    setPost={setPost}
+                    photo={photo}
+                    setPhoto={setPhoto}
                 />
                 <PostPreview
-                    title={title}
-                    content={content}
+                    post={post}
+                    photo={photo}
                 />
             </div>
         </div>

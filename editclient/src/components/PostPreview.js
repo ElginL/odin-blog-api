@@ -1,13 +1,34 @@
 import styles from '../styles/PostPreview.module.css';
 
-const PostPreview = ({ title, content }) => {
+const PostPreview = ({ post, photo }) => {
     return (
         <div className={styles["container"]}>
             <h2>
-                {title}
+                {post.title}
             </h2>
+            {
+                photo
+                    ? <img src={URL.createObjectURL(photo)} alt="post" className={styles["image"]} />
+                    : (
+                        post.imgName
+                            ? (
+                                <img 
+                                    src={`http://localhost:3000/uploads/${post.imgName}`} 
+                                    alt="post" 
+                                    className={styles["image"]} 
+                                />
+                            )
+                            : (
+                                <div className={styles["no-img"]}>
+                                    <p>
+                                        There's no image for this post yet!
+                                    </p>
+                                </div>
+                            )
+                    )
+            }
             <p>
-                {content}
+                {post.content}
             </p>
         </div>
     );

@@ -4,18 +4,23 @@ import { useNavigate } from 'react-router-dom';
 
 const EditForm = ({
     postId,
-    title,
-    setTitle,
-    content,
-    setContent,
-    isPublished,
-    setIsPublished
+    post,
+    setPost,
+    photo,
+    setPhoto
 }) => {
     const navigate = useNavigate();
     
     const saveHandler = e => {
         e.preventDefault();
-        editSinglePost(postId, title, content, isPublished).then(() => {
+        editSinglePost(
+            postId,
+            post.title,
+            post.content,
+            post.isPublished, 
+            photo,
+            post.imgName
+        ).then(() => {
             navigate("/");
         });
     }
@@ -31,8 +36,8 @@ const EditForm = ({
                     <input
                         type="text"
                         name="title"
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
+                        value={post.title}
+                        onChange={e => setPost({ ...post, title: e.target.value })}
                         placeholder="Enter title here"
                         maxLength="50"
                     />
@@ -42,8 +47,8 @@ const EditForm = ({
                     <textarea
                         type="text"
                         name="content"
-                        value={content}
-                        onChange={e => setContent(e.target.value)}
+                        value={post.content}
+                        onChange={e => setPost({ ...post, content: e.target.value })}
                         placeholder="Enter content here"
                         rows="10"
                         cols="50"
@@ -54,8 +59,16 @@ const EditForm = ({
                     <input
                         name="isPublished"
                         type="checkbox"
-                        checked={isPublished}
-                        onChange={() => setIsPublished(!isPublished)}
+                        checked={post.isPublished}
+                        onChange={() => setPost({ ...post, isPublished: !post.isPublished})}
+                    />
+                </div>
+                <div className={styles["form-field"]}>
+                    <input 
+                        type="file"
+                        accept=".png, .jpg, .jpeg"
+                        name="photo"
+                        onChange={e => setPhoto(e.target.files[0])}
                     />
                 </div>
                 <input type="submit" value="Save" />

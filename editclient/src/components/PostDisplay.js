@@ -9,9 +9,17 @@ const PostDisplay = ({ post }) => {
                     {post.title}
                 </h2>
             </div>
-            <div className={styles["image"]}>
-
-            </div>
+            {
+                post.photo
+                    ? <img src={`http://localhost:3000/uploads/${post.photo}`} className={styles["image"]} />
+                    : (
+                        <div className={styles["image-empty"]}>
+                            <p>
+                                Post has no image yet...
+                            </p>
+                        </div>
+                    )
+            }
             <p>
                 Created: {post.createdDate}, {post.createdTime}<br/>
                 Updated: {post.updatedDate}, {post.updatedTime}

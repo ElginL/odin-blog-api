@@ -3,7 +3,7 @@ import { fetchPosts } from '../api/postApi';
 import PostDisplay from './PostDisplay';
 import styles from '../styles/Posts.module.css';
 
-const PublishedPosts = ({ isPublished }) => {
+const Posts = ({ isPublished }) => {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -41,4 +41,4 @@ const PublishedPosts = ({ isPublished }) => {
     );
 };
 
-export default PublishedPosts;
+export default Posts;

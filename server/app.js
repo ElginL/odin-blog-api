@@ -21,6 +21,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'));
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('public'));
 
 // Routes
 app.use('/api/posts', postRoute);
