@@ -11,7 +11,7 @@ const Footer = () => {
                 <img src={githubIcon} alt="Github icon" />
             </a>
         </div>
-    )
-}
+    );
+};
 
 export default Footer;

@@ -1,0 +1,35 @@
+.container {
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    width: 100vw;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+}
+
+.logout-btn {
+    background-color: red;
+    color: white;
+    border-radius: 25px;
+    padding: 5px 20px;
+    font-size: 1.3rem;
+    transition: background-color 0.5s;
+}
+
+.logout-btn:hover {
+    background-color: rgb(176, 20, 20);
+    cursor: pointer;
+}

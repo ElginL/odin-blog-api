@@ -2,8 +2,8 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 const { body, validationResult } = require('express-validator');
 
-const getAllPosts = (req, res, next) => {
-    Post.find()
+const getUnpublishedPosts = (req, res, next) => {
+    Post.find({ isPublished: false })
         .select({ title: 1, content: 1, createdAt: 1 })
         .exec((err, results) => {
             if (err) {
@@ -249,7 +249,7 @@ const deleteComment = (req, res, next) => {
 }
 
 module.exports = {
-    getAllPosts,
+    getUnpublishedPosts,
     getPublishedPosts,
     createPost,
     getOnePost,

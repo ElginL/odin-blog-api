@@ -52,7 +52,10 @@ const login = (req, res) => {
                             return next(err);
                         }
 
-                        res.json({ token });
+                        res.json({
+                            token,
+                            username 
+                        });
                     })
                 } else {
                     res.status(401).json({ message: "The username or password is incorrect" });
