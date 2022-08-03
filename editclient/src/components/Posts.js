@@ -14,7 +14,7 @@ const PublishedPosts = ({ isPublished }) => {
         }
 
         getPosts();
-    }, []);
+    }, [isPublished]);
 
     return (
         <div>

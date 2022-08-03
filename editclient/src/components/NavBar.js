@@ -4,12 +4,14 @@ import styles from '../styles/NavBar.module.css';
 const NavBar = () => {
     const logOutHandler = () => {
         sessionStorage.clear();
-        window.location.reload();
+        window.location.href="/";
     }
 
     return (
-        <nav className={styles['container']}>
-            <h1>Blog Editor</h1>
+        <div className={styles['container']}>
+            <Link to="/" className={styles["link"]}>
+                <h1>Blog Editor</h1>
+            </Link>
             <div className={styles["nav-links"]}>
                 <Link to="/" className={styles["link"]}>
                     Create New
@@ -18,7 +20,7 @@ const NavBar = () => {
                     Log Out
                 </button>
             </div>
-        </nav>
+        </div>
     );
 };
 

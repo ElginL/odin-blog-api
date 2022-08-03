@@ -9,7 +9,7 @@ const Home = () => {
         <div>
             <NavBar />
             <div className={styles["content"]}>
-                <h1>Welcome back {username}</h1>
+                <h1>Hi, {username}</h1>
                 <Posts isPublished={true} />
                 <Posts isPublished={false} />
             </div>

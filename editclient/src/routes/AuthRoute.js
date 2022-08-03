@@ -4,6 +4,7 @@ import {
     Route,
 } from 'react-router-dom';
 import Home from '../pages/Home';
+import EditPost from '../pages/EditPost';
 
 const Router = () => {
     return (
@@ -12,6 +13,10 @@ const Router = () => {
                 <Route
                     path="/"
                     element={<Home />}
+                />
+                <Route
+                    path="/post/:postId"
+                    element={<EditPost />}
                 />
             </Routes>
         </BrowserRouter>

@@ -18,7 +18,7 @@ const Login = () => {
                 return;
             }
 
-            window.location.href="http://localhost:3001";
+            window.location.href="/";
         }
 
         loginUser();

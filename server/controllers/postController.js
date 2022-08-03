@@ -4,7 +4,7 @@ const { body, validationResult } = require('express-validator');
 
 const getUnpublishedPosts = (req, res, next) => {
     Post.find({ isPublished: false })
-        .select({ title: 1, content: 1, createdAt: 1 })
+        .select({ title: 1, content: 1, createdAt: 1, updatedAt: 1 })
         .exec((err, results) => {
             if (err) {
                 return next(err);
@@ -14,7 +14,10 @@ const getUnpublishedPosts = (req, res, next) => {
                 _id: result._id,
                 title: result.title,
                 content: result.content,
-                createdDate: result.createdDate
+                createdDate: result.createdDate,
+                updatedDate: result.updatedDate,
+                createdTime: result.createdTime,
+                updatedTime: result.updatedTime
             }))
 
             res.json(formattedResults);
@@ -23,7 +26,7 @@ const getUnpublishedPosts = (req, res, next) => {
 
 const getPublishedPosts = (req, res, next) => {
     Post.find({ isPublished: true })
-        .select({ title: 1, content: 1, createdAt: 1 })
+        .select({ title: 1, content: 1, createdAt: 1, updatedAt: 1 })
         .exec((err, results) => {
             if (err) {
                 return next(err);
@@ -33,7 +36,10 @@ const getPublishedPosts = (req, res, next) => {
                 _id: result._id,
                 title: result.title,
                 content: result.content,
-                createdDate: result.createdDate
+                createdDate: result.createdDate,
+                updatedDate: result.updatedDate,
+                createdTime: result.createdTime,
+                updatedTime: result.updatedTime
             }))
 
             res.json(formattedResults);
@@ -43,12 +49,10 @@ const getPublishedPosts = (req, res, next) => {
 const createPost = [
     body('title')
         .trim()
-        .escape()
         .isLength({ min: 6, max: 50 })
         .withMessage("Title must be between 6 and 50 characters"),
     body('content')
         .trim()
-        .escape()
         .isLength({ min: 6 })
         .withMessage("Content must be at least 6 characters long"),
     body('isPublished')
@@ -81,7 +85,7 @@ const getOnePost = (req, res, next) => {
     const postId = req.params.id;
 
     Post.findById(postId)
-        .select({ title: 1, content: 1, createdAt: 1, updatedAt: 1 })
+        .select({ title: 1, content: 1, createdAt: 1, updatedAt: 1, isPublished: 1 })
         .exec((err, foundPost) => {
             if (err) {
                 return next(err);
@@ -99,7 +103,8 @@ const getOnePost = (req, res, next) => {
                 createdDate: foundPost.createdDate,
                 createdTime: foundPost.createdTime,
                 editedDate: foundPost.updatedDate,
-                editedTime: foundPost.updatedTime
+                editedTime: foundPost.updatedTime,
+                isPublished: foundPost.isPublished
             });
         });
 };
@@ -107,12 +112,10 @@ const getOnePost = (req, res, next) => {
 const editOnePost = [
     body('title')
         .trim()
-        .escape()
         .isLength({ min: 6, max: 50 })
         .withMessage("Title must be between 6 and 50 characters"),
     body('content')
         .trim()
-        .escape()
         .isLength({ min: 6 })
         .withMessage("Content must be at least 6 characters long"),
     body('isPublished')

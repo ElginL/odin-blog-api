@@ -1,0 +1,10 @@
+.container {
+    padding: 150px 60px 150px 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page {
+    background-color: lightgrey;
+    min-height: 100vh;
+}

@@ -1,0 +1,47 @@
+.container {
+    background-color: white;
+    width: 40vw;
+    padding: 20px;
+}
+
+.container > h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-field > label,
+.checkbox > label {
+    font-size: 1.35rem;
+
+}
+
+.form-field > input,
+.form-field > textarea {
+    padding: 5px;
+    font-size: 1.2rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.checkbox > input {
+    width: 20px;
+    height: 20px;
+}
