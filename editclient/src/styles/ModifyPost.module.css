@@ -7,4 +7,19 @@
 .page {
     background-color: lightgrey;
     min-height: 100vh;
+    padding-bottom: 150px;
+}
+
+@media(max-width: 1440px) {
+    .container {
+        padding: 150px 30px 150px 30px;
+    }
+}
+
+@media(max-width: 1000px) {
+    .container {
+        flex-direction: column;
+        gap: 80px;
+        align-items: center;
+    }
 }

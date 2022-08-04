@@ -33,3 +33,17 @@
     align-items: center;
     margin-top: 40px;
 }
+
+@media(max-width: 1000px) {
+    .container {
+        width: 80vw;
+    }
+
+    .image {
+        width: 90%;
+    }
+
+    .no-img {
+        width: 90%;
+    }
+}

@@ -8,3 +8,13 @@
     flex-wrap: wrap;
     column-gap: 40px;
 }
+
+@media(max-width: 720px) {
+    .header {
+        text-align: center;
+    }
+
+    .posts-container {
+        justify-content: center;
+    }
+}

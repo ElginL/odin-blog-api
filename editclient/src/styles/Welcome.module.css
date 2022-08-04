@@ -35,3 +35,9 @@
 .login:hover {
     border-radius: 0;
 }
+
+@media(max-width: 650px) {
+    .welcome-container {
+        top: 25vh;
+    }
+}

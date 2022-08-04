@@ -70,3 +70,9 @@ input[type="submit"]:hover {
     background-color: #009fd4;
     cursor: pointer;
 }
+
+@media(max-width: 1000px) {
+    .form-container {
+        width: 90%;
+    }
+}

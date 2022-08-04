@@ -14,7 +14,7 @@ const NavBar = () => {
             </Link>
             <div className={styles["nav-links"]}>
                 <Link to="/post/create" className={styles["link"]}>
-                    Create New
+                    New Post
                 </Link>
                 <button onClick={logOutHandler} className={styles["logout-btn"]}>
                     Log Out

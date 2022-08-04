@@ -24,6 +24,7 @@
 .logout-btn {
     background-color: red;
     color: white;
+    border: none;
     border-radius: 25px;
     padding: 5px 20px;
     font-size: 1.3rem;
@@ -33,4 +34,10 @@
 .logout-btn:hover {
     background-color: rgb(176, 20, 20);
     cursor: pointer;
+}
+
+@media(max-width: 500px) {
+    .link > h1 {
+        font-size: 1.5rem;
+    }
 }
