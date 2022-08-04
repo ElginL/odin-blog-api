@@ -50,6 +50,11 @@ input[type="file"] {
     padding: 0;
 }
 
+.error {
+    color: red;
+    font-size: 1.25rem;
+}
+
 @media(max-width: 1000px) {
     .container {
         width: 80vw;

@@ -13,7 +13,7 @@ const PostPreview = ({ post, photo }) => {
                         post.imgName
                             ? (
                                 <img 
-                                    src={`http://localhost:3000/uploads/${post.imgName}`} 
+                                    src={`https://blogspace-api.herokuapp.com/uploads/${post.imgName}`} 
                                     alt="post" 
                                     className={styles["image"]} 
                                 />

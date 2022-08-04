@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = `http://localhost:3000/api/users`;
+const baseURL = `https://blogspace-api.herokuapp.com/api/users`;
 
 const login = async (username, password) => {
     try {

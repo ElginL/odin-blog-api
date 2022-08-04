@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import styles from '../styles/ModifyForm.module.css';
 import { editSinglePost, createPost } from '../api/postApi';
 import { useNavigate } from 'react-router-dom';
@@ -10,20 +11,41 @@ const ModifyForm = ({
     setPhoto
 }) => {
     const navigate = useNavigate();
+    const [error, setError] = useState("");
     
     const saveHandler = e => {
         e.preventDefault();
-        editSinglePost(postId, post, photo).then(() => {
-            navigate("/");
-        });
+
+        if (fieldsValid()) {
+            editSinglePost(postId, post, photo).then(() => {
+                navigate("/");
+            });
+        }
     }
 
     const createHandler = e => {
         e.preventDefault();
         
-        createPost(post, photo).then(() => {
-            navigate("/");
-        })
+        if (fieldsValid()) {
+            createPost(post, photo).then(() => {
+                navigate("/");
+            });
+        }
+    }
+
+    const fieldsValid = () => {
+        if (post.title.length < 6 && post.content.length < 6) {
+            setError("Error: Title and Content must be at least 6 characters");
+            return false;
+        } else if (post.title.length < 6) {
+            setError("Error: Title must be at least 6 characters");
+            return false;
+        } else if (post.content.length < 6) {
+            setError("Error: Content must be at least 6 characters");
+            return false;
+        }
+
+        return true;
     }
 
     return (
@@ -75,6 +97,11 @@ const ModifyForm = ({
                         onChange={() => setPost({ ...post, isPublished: !post.isPublished})}
                     />
                 </div>
+                {
+                    error
+                        ? <p className={styles["error"]}>{error}</p>
+                        : null
+                }
                 <input type="submit" value={postId ? "Save" : "Create"} />
             </form>
         </div>

@@ -19,7 +19,7 @@ const PostDisplay = ({ post }) => {
             </div>
             {
                 post.photo
-                    ? <img src={`http://localhost:3000/uploads/${post.photo}`} className={styles["image"]} />
+                    ? <img src={`https://blogspace-api.herokuapp.com/uploads/${post.photo}`} className={styles["image"]} />
                     : (
                         <div className={styles["image-empty"]}>
                             <p>

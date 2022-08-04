@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3000/api/posts';
+const baseURL = 'https://blogspace-api.herokuapp.com/api/posts';
 
 const getConfig = () => {
     return {
