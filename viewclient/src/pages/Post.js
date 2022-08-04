@@ -32,9 +32,22 @@ const Post = () => {
             <Navbar />
             <div className={styles["content-card"]}>
                 <h2>{post.title}</h2>
-                <div className={styles["image"]}>
-                    
-                </div>
+                {
+                    post.photo
+                        ? (
+                            <img 
+                                src={`http://localhost:3000/uploads/${post.photo}`} 
+                                className={styles["image"]} 
+                                alt="post"
+                            />
+                        ) : (
+                            <div className={styles["no-img"]}>
+                                <p>There is no image for this post...</p>
+                            </div>
+                        ) 
+
+                }
+               
                 <p>
                     {post.content}
                 </p>
