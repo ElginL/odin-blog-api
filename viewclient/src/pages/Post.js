@@ -5,10 +5,18 @@ import styles from '../styles/Post.module.css';
 import Comments from '../components/Comments';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { DateTime } from 'luxon';
 
 const Post = () => {
     const { postId } = useParams();
     const [post, setPost] = useState({});
+
+    const created = new Date(post.createdAt);
+    const updated = new Date(post.updatedAt);
+    const createdDate = DateTime.fromJSDate(created).toLocaleString(DateTime.DATE_MED);
+    const createdTime = DateTime.fromJSDate(created).toLocaleString(DateTime.TIME_24_SIMPLE);
+    const updatedDate = DateTime.fromJSDate(updated).toLocaleString(DateTime.DATE_MED);
+    const updatedTime = DateTime.fromJSDate(updated).toLocaleString(DateTime.TIME_24_SIMPLE);
 
     useEffect(() => {
         const getOnePost = async () => {
@@ -33,13 +41,13 @@ const Post = () => {
                 <div className={styles["time-container"]}>
                     <h3>Created:</h3>
                     <p>
-                        {post.createdDate}, {post.createdTime}
+                        {createdDate}, {createdTime}
                     </p>
                     <h3>
                         Last Edited:
                     </h3>
                     <p>
-                        {post.editedDate}, {post.editedTime}
+                        {updatedDate}, {updatedTime}
                     </p>
                 </div>
             </div>

@@ -30,18 +30,40 @@ const fetchSinglePost = async id => {
     }
 }
 
-const editSinglePost = async (id, title, content, isPublished, photo, imgName) => {
+const editSinglePost = async (id, post, photo) => {
     const formData = new FormData();
     if (photo) {
         formData.append('photo', photo);
     }
-    formData.append('title', title);
-    formData.append('content', content);
-    formData.append('isPublished', isPublished);
-    formData.append('imgName', imgName);
+    formData.append('title', post.title);
+    formData.append('content', post.content);
+    formData.append('isPublished', post.isPublished);
+    formData.append('imgName', post.imgName);
 
     try {
         await axios.put(`${baseURL}/${id}`, formData, getConfig());
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+const createPost = async (post, photo) => {
+    const formData = new FormData();
+    formData.append('photo', photo);
+    formData.append('title', post.title);
+    formData.append('content', post.content);
+    formData.append('isPublished', post.isPublished);
+
+    try {
+        await axios.post(baseURL, formData, getConfig());
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+const deletePost = async (postId) => {
+    try {
+        await axios.delete(`${baseURL}/${postId}`, getConfig());
     } catch(err) {
         console.log(err);
     }
@@ -51,4 +73,6 @@ export {
     fetchPosts,
     fetchSinglePost,
     editSinglePost,
+    createPost,
+    deletePost
 }

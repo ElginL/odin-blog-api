@@ -33,7 +33,7 @@ router.get('/unpublished', postController.getUnpublishedPosts);
 router.get('/published', postController.getPublishedPosts);
 
 // Create post
-router.post('/', verifyToken, postController.createPost);
+router.post('/', verifyToken, upload.single('photo'), postController.createPost);
 
 // Get one post
 router.get('/:id', postController.getOnePost);

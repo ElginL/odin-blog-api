@@ -9,17 +9,7 @@ const getUnpublishedPosts = (req, res, next) => {
                 return next(err);
             }
 
-            const formattedResults = results.map(result => ({
-                ...result._doc,
-                createdDate: result.createdDate,
-                updatedDate: result.updatedDate,
-                createdTime: result.createdTime,
-                updatedTime: result.updatedTime,
-            }))
-
-            console.log(formattedResults);
-
-            res.json(formattedResults);
+            res.json(results);
         });
 }
 
@@ -30,15 +20,7 @@ const getPublishedPosts = (req, res, next) => {
                 return next(err);
             }
 
-            const formattedResults = results.map(result => ({
-                ...result._doc,
-                createdDate: result.createdDate,
-                updatedDate: result.updatedDate,
-                createdTime: result.createdTime,
-                updatedTime: result.updatedTime,
-            }))
-
-            res.json(formattedResults);
+            res.json(results);
         });
 };
 
@@ -64,7 +46,8 @@ const createPost = [
         const newPost = new Post({
             title: req.body.title,
             content: req.body.content,
-            isPublished: req.body.isPublished
+            isPublished: req.body.isPublished,
+            photo: req.file ? req.file.filename : ""
         });
     
         newPost.save(err => {
@@ -91,13 +74,7 @@ const getOnePost = (req, res, next) => {
                 return;
             }
 
-            res.json({
-                ...foundPost._doc,
-                createdDate: foundPost.createdDate,
-                createdTime: foundPost.createdTime,
-                editedDate: foundPost.updatedDate,
-                editedTime: foundPost.updatedTime,
-            });
+            res.json(foundPost);
         });
 };
 
@@ -174,20 +151,12 @@ const getAllComments = (req, res, next) => {
     const postId = req.params.id;
 
     Comment.find({ post: postId })
-        .select({ text: 1, username: 1, createdAt: 1 })
         .exec((err, comments) => {
             if (err) {
                 return next(err);
             }
 
-            const formattedComments = comments.map(comment => ({
-                _id: comment._id,
-                username: comment.username,
-                text: comment.text,
-                createdAt: comment.createdAtFormatted
-            }));
-
-            res.json(formattedComments);
+            res.json(comments);
         })
 }
 

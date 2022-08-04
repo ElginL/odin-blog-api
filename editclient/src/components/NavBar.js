@@ -13,7 +13,7 @@ const NavBar = () => {
                 <h1>Blog Editor</h1>
             </Link>
             <div className={styles["nav-links"]}>
-                <Link to="/" className={styles["link"]}>
+                <Link to="/post/create" className={styles["link"]}>
                     Create New
                 </Link>
                 <button onClick={logOutHandler} className={styles["logout-btn"]}>

@@ -1,8 +1,8 @@
-import styles from '../styles/EditForm.module.css';
-import { editSinglePost } from '../api/postApi';
+import styles from '../styles/ModifyForm.module.css';
+import { editSinglePost, createPost } from '../api/postApi';
 import { useNavigate } from 'react-router-dom';
 
-const EditForm = ({
+const ModifyForm = ({
     postId,
     post,
     setPost,
@@ -13,24 +13,27 @@ const EditForm = ({
     
     const saveHandler = e => {
         e.preventDefault();
-        editSinglePost(
-            postId,
-            post.title,
-            post.content,
-            post.isPublished, 
-            photo,
-            post.imgName
-        ).then(() => {
+        editSinglePost(postId, post, photo).then(() => {
             navigate("/");
         });
     }
 
+    const createHandler = e => {
+        e.preventDefault();
+        
+        createPost(post, photo).then(() => {
+            navigate("/");
+        })
+    }
+
     return (
         <div className={styles["container"]}>
-            <h2>
-                Edit Form
-            </h2>
-            <form onSubmit={saveHandler} className={styles["form"]}>
+            {
+                postId
+                    ? <h2>Edit Form</h2>
+                    : <h2>Create Form</h2>
+            }
+            <form onSubmit={postId ? saveHandler : createHandler} className={styles["form"]}>
                 <div className={styles["form-field"]}>
                     <label htmlFor="title">Title</label>
                     <input
@@ -54,6 +57,15 @@ const EditForm = ({
                         cols="50"
                     />
                 </div>
+                <div className={styles["form-field"]}>
+                    <label htmlFor="photo">Post Image</label>
+                    <input 
+                        type="file"
+                        accept=".png, .jpg, .jpeg"
+                        name="photo"
+                        onChange={e => setPhoto(e.target.files[0])}
+                    />
+                </div>
                 <div className={styles["checkbox"]}>
                     <label htmlFor="isPublished">Publish Blog</label>
                     <input
@@ -63,18 +75,10 @@ const EditForm = ({
                         onChange={() => setPost({ ...post, isPublished: !post.isPublished})}
                     />
                 </div>
-                <div className={styles["form-field"]}>
-                    <input 
-                        type="file"
-                        accept=".png, .jpg, .jpeg"
-                        name="photo"
-                        onChange={e => setPhoto(e.target.files[0])}
-                    />
-                </div>
-                <input type="submit" value="Save" />
+                <input type="submit" value={postId ? "Save" : "Create"} />
             </form>
         </div>
     );
 };
 
-export default EditForm;
+export default ModifyForm;

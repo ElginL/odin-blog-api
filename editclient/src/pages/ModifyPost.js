@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import { fetchSinglePost } from '../api/postApi';
 import NavBar from '../components/NavBar';
 import PostPreview from '../components/PostPreview';
-import styles from '../styles/EditPost.module.css';
-import EditForm from '../components/EditForm';
+import DangerZone from '../components/DangerZone';
+import styles from '../styles/ModifyPost.module.css';
+import ModifyForm from '../components/ModifyForm';
 
-const EditPost = () => {
+const ModifyPost = ({ isEdit }) => {
     const { postId } = useParams();
     const [post, setPost] = useState({
         title: '',
@@ -27,14 +28,16 @@ const EditPost = () => {
             });
         };
 
-        getSinglePost();
+        if (isEdit) {
+            getSinglePost();
+        }
     }, [postId]);
 
     return (
         <div className={styles["page"]}>
             <NavBar />
             <div className={styles["container"]}>
-                <EditForm
+                <ModifyForm
                     postId={postId}
                     post={post}
                     setPost={setPost}
@@ -46,8 +49,15 @@ const EditPost = () => {
                     photo={photo}
                 />
             </div>
+            {
+                isEdit
+                    ? (
+                        <DangerZone postId={postId}/>
+                    )
+                    : null
+            }
         </div>
     );
 };
 
-export default EditPost;
+export default ModifyPost;

@@ -1,0 +1,21 @@
+.danger-zone {
+    border: 1px solid red;
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.danger-zone > h3 {
+    color: red;
+    margin: 0;
+    font-size: 2rem;
+}
+
+.danger-zone > button {
+    padding: 5px 20px;
+    font-size: 1.5rem;
+}

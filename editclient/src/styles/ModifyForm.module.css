@@ -45,3 +45,7 @@
     width: 20px;
     height: 20px;
 }
+
+input[type="file"] {
+    padding: 0;
+}

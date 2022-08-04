@@ -1,7 +1,15 @@
 import styles from '../styles/PostDisplay.module.css';
 import { Link } from 'react-router-dom';
+import { DateTime } from 'luxon';
 
 const PostDisplay = ({ post }) => {
+    const created = new Date(post.createdAt);
+    const updated = new Date(post.updatedAt);
+    const createdDate = DateTime.fromJSDate(created).toLocaleString(DateTime.DATE_MED);
+    const createdTime = DateTime.fromJSDate(created).toLocaleString(DateTime.TIME_24_SIMPLE);
+    const updatedDate = DateTime.fromJSDate(updated).toLocaleString(DateTime.DATE_MED);
+    const updatedTime = DateTime.fromJSDate(updated).toLocaleString(DateTime.TIME_24_SIMPLE);
+
     return (
         <Link to={`/post/${post._id}`} className={styles["container"]}>
             <div className={styles["title-container"]}>
@@ -21,8 +29,8 @@ const PostDisplay = ({ post }) => {
                     )
             }
             <p>
-                Created: {post.createdDate}, {post.createdTime}<br/>
-                Updated: {post.updatedDate}, {post.updatedTime}
+                Created: {createdDate}, {createdTime}<br/>
+                Updated: {updatedDate}, {updatedTime}
             </p>
         </Link>
     )

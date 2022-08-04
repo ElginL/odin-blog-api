@@ -4,7 +4,7 @@ import {
     Route,
 } from 'react-router-dom';
 import Home from '../pages/Home';
-import EditPost from '../pages/EditPost';
+import ModifyPost from '../pages/ModifyPost';
 
 const Router = () => {
     return (
@@ -16,7 +16,11 @@ const Router = () => {
                 />
                 <Route
                     path="/post/:postId"
-                    element={<EditPost />}
+                    element={<ModifyPost isEdit={true} />}
+                />
+                <Route
+                    path="/post/create"
+                    element={<ModifyPost isEdit={false} />}
                 />
             </Routes>
         </BrowserRouter>
