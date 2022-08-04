@@ -9,7 +9,8 @@ https://blogspace-view.herokuapp.com/
 <img src="https://user-images.githubusercontent.com/88147891/182830152-609e57a5-51ba-4d56-81f6-dc4a235e265d.png" width="1000" height="600" />
 
 The second website enables me to create, edit, and delete blog posts that are served by the first website above.<br/>
-I can also choose whether to publish or unpublish the blogs.
+I can also choose whether to publish or unpublish the blogs.<br/>
+https://blogspace-edit.herokuapp.com/
 
 <img src="https://user-images.githubusercontent.com/88147891/182830770-98787f87-dd7a-46a2-9699-a5f0fb229c05.png" width="1000" height="600" />
 
