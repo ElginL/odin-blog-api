@@ -36,7 +36,7 @@ const Post = () => {
                     post.photo
                         ? (
                             <img 
-                                src={`http://localhost:3000/uploads/${post.photo}`} 
+                                src={`https://blogspace-api.herokuapp.com/uploads/${post.photo}`} 
                                 className={styles["image"]} 
                                 alt="post"
                             />
